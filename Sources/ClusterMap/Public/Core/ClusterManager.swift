@@ -55,6 +55,7 @@ public actor ClusterManager<Annotation: CoordinateIdentifiable>
     ///
     /// - Parameter annotation: The annotation to be added.
     public func add(_ annotation: Annotation) {
+        guard !tree.contains(annotation) else { return }
         tree.add(annotation)
     }
 
@@ -62,7 +63,10 @@ public actor ClusterManager<Annotation: CoordinateIdentifiable>
     ///
     /// - Parameter annotations: An array of annotations to be added.
     public func add(_ annotations: [Annotation]) {
-        annotations.forEach { tree.add($0) }
+        annotations.forEach {
+            guard !tree.contains($0) else { return }
+            tree.add($0)
+        }
     }
 
     /// Removes a single annotation from the cluster manager.

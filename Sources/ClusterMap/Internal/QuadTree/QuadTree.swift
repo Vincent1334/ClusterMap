@@ -27,4 +27,9 @@ final class QuadTree<AnnotationType: CoordinateIdentifiable> where AnnotationTyp
     func findAnnotations(in targetRect: MKMapRect) -> [AnnotationType] {
         root.findAnnotations(in: targetRect)
     }
+    
+    func contains(_ annotation: AnnotationType) -> Bool {
+        let pointRect = MKMapRect(origin: MKMapPoint(annotation.coordinate), size: MKMapSize(width: 0, height: 0))
+        return root.findAnnotations(in: pointRect).contains(annotation)
+    }
 }
